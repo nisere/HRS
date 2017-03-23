@@ -1,0 +1,55 @@
+﻿@model HRS.Models.RoomItem
+
+@using (Ajax.BeginForm("EditRoom", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnBegin = "openDialog",
+        OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'roomRow')"
+    }, new { id = "roomRow" + Model.Index }))
+{
+    <div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID, new { id = "ID" + Model.Index })
+        @Html.HiddenFor(model => model.BookingID, new { id = "BookingID" + Model.Index })
+        @Html.HiddenFor(model => model.Index, new { id = "Index" + Model.Index })
+
+        @Html.TextBoxFor(model => model.Label, new { @class = "form-control small", id = "Label" + Model.Index })
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.From)
+        <input type="hidden" name="From" value="@Model.From.Value.ToShortDateString()" />
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.To)
+        <input type="hidden" name="To" value="@Model.To.Value.ToShortDateString()" />
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.RoomTypeName)
+        @Html.HiddenFor(model => model.RoomTypeID)
+        <input type="hidden" name="RoomTypeName" value="@Model.RoomTypeName" />
+    </div>
+    <div>
+        @Html.DropDownListFor(model => model.RoomID,
+                        new SelectList(ViewBag.Rooms, "ID", "Name", Model.RoomID),
+                        "-- Choose --",
+                        new { @class = "form-control form-control-dropdown", id = "Room" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Price, new { @class = "form-control price", id = "Price" + Model.Index })
+    </div>
+    <div>
+        @Html.DropDownListFor(model => model.Status,
+                        new SelectList(ViewBag.Statuses, "Key", "Value", Model.Status),
+                        new { @class = "form-control form-control-dropdown", id = "Status" + Model.Index })
+    </div>
+    <div>
+        <input type="submit" name="Save" value="Save" class="btn btn-default" />
+        @Ajax.ActionLink("Cancel", "Room", new { id = Model.ID, index = Model.Index },
+                 new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'roomRow')" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.Label)
+        @Html.ValidationMessageFor(model => model.Price)
+        @Html.ValidationSummary(true)
+    </div>
+}

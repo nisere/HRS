@@ -1,0 +1,21 @@
+﻿@model DateTime?
+
+@{  Object obj = null; }
+
+@if (ViewBag.id != null)
+{
+    if (ViewBag.onchange != null)
+    {
+        obj = new { @class = "datepicker form-control", type = "text", id = ViewBag.id, onchange = ViewBag.onchange };
+    }
+    else
+    {
+        obj = new { @class = "datepicker form-control", type = "text", id = ViewBag.id };
+    }
+}
+else
+{
+    obj = new { @class = "datepicker form-control", type = "text" };
+}
+
+@Html.TextBox("", (Model != null) ? String.Format("{0:d}", Model) : String.Empty, obj)

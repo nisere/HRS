@@ -1,0 +1,181 @@
+﻿@model HRS.ViewModels.SearchModel
+@{
+    ViewBag.Title = "Bookings";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<section>
+    @using (Html.BeginForm("Details", "Booking", FormMethod.Post))
+    {
+        <hr />
+        <b>Booking code: </b>
+        <input type="text" name="id" class="form-control medium" />
+        <input type="submit" class="btn btn-default" value="View booking" />
+
+    }
+    <hr />
+    <h4>Search</h4>
+
+    @using (Html.BeginForm("Search", "Booking", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "SearchForm" }))
+    { 
+        @Html.ValidationSummary(false)
+        <div class="col-md-6 col-48">
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreateDateFrom, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    from @Html.EditorFor(model => model.CreateDateFrom, new { @class = "form-control" })
+                    to @Html.EditorFor(model => model.CreateDateTo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CheckInFrom, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    from @Html.EditorFor(model => model.CheckInFrom, new { @class = "form-control" })
+                    to @Html.EditorFor(model => model.CheckInTo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CheckOutFrom, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                   from  @Html.EditorFor(model => model.CheckOutFrom, new { @class = "form-control" })
+                   to @Html.EditorFor(model => model.CheckOutTo, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-48-right">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ClientID, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.HiddenFor(model => model.ClientID, new { id = "ClientID" })
+                    @Html.TextBoxFor(model => model.ClientName, new { id = "ClientName", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RoomTypeID, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.RoomTypeID,
+                        new SelectList(ViewBag.RoomTypes, "ID", "Name", Model.RoomTypeID),
+                        "-- Choose --",
+                        new { @class = "form-control form-control-dropdown" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Statuses, new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.ListBoxFor(model => model.Statuses,
+                        new MultiSelectList(ViewBag.Statuses, "Key", "Value", Model.Statuses),
+                        new { @class = "form-control form-control-dropdown" })
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;">
+            <input type="submit" value="Search" class="btn btn-default" />
+            <input type="button" value="Reset" class="btn btn-default" onclick="resetForm()" />
+        </div>
+    }
+    <hr />
+    @if (Model.Results != null)
+    {
+        if (!Model.Results.Any())
+        {
+            <p>No results.</p>
+        }
+        else
+        {
+        <table class="table" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].CreateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].ClientName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].CheckIn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].CheckOut)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].Rooms)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Results[0].Balance)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.ID)
+                        </td>
+                        <td>
+                            @item.CreateDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.ClientName)
+                        </td>
+                        <td>
+                            @item.CheckIn.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.CheckOut.ToShortDateString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Rooms)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Balance)
+                        </td>
+                        <td>
+                            @Html.ActionLink("View", "Details", new { id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>            
+        }
+    }
+</section>
+
+@section Scripts
+{
+    <script>
+        $("#ClientName").autocomplete({
+            source: '@Url.Action("GetClient")',
+            select: function (event, ui) {
+                $("#ClientID").val(ui.item.id)
+                var elem = $('.input-validation-error').filter('#ClientID');
+                if (elem.length > 0) {
+                    elem.valid();
+                }
+            }
+        })
+
+        function resetForm() {
+            $('#ClientID').val('');
+            $('#SearchForm input[type="text"]').val('');
+            $('#SearchForm select').val('');
+        }
+    </script>
+}

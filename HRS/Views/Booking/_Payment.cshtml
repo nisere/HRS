@@ -1,0 +1,22 @@
+﻿@model HRS.Models.Payment
+<div id="paymentRow@(Model.Index)">
+    <div>
+        @Html.DisplayFor(model => model.Date)
+    </div>
+    <div id ="PaymentValue@(Model.Index)">
+        @Html.DisplayFor(model => model.Value)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.Text)
+    </div>
+    <div>
+        @Ajax.ActionLink("Edit", "EditPayment", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paymentRow')" })
+        @Ajax.ActionLink("Delete", "DeletePayment", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "deleteDialog" },
+                new { @class = "deleteOpener" })
+    </div>
+    <div></div>
+</div>
+
+

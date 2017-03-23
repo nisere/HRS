@@ -1,0 +1,48 @@
+﻿@model HRS.Models.Pax
+
+@using (Ajax.BeginForm("EditPax", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnBegin = "openDialog",
+        OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paxRow')"
+    }, new { id = "paxRow" + Model.Index }))
+{
+    <div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID, new { id = "ID" + Model.Index })
+        @Html.HiddenFor(model => model.BookingID, new { id = "BookingID" + Model.Index })
+        @Html.HiddenFor(model => model.Index, new { id = "Index" + Model.Index })
+
+        @Html.DropDownListFor(model => model.Title, new SelectList(ViewBag.Titles, "Key", "Value"),
+            new { @class = "form-control form-control-dropdown", id = "Title" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "FirstName" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "LastName" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Age, new { @class = "form-control tiny", id = "Age" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control medium", id = "Phone" + Model.Index })
+    </div>
+    <div>
+        @Html.DropDownListFor(model => model.RoomItemID,
+                            new SelectList(ViewBag.RoomLabels, "ID", "Label", Model.RoomItemID),
+                            "-- Choose --",
+                             new { @class = "form-control form-control-dropdown", id = "RoomItemID" + Model.Index })
+    </div>
+    <div>
+        <input type="submit" name="Save" value="Save" class="btn btn-default" />
+        @Ajax.ActionLink("Cancel", "Pax", new { id = Model.ID, index = Model.Index },
+                 new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paxRow')" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.LastName)
+        @Html.ValidationSummary(true)
+    </div>
+}
+

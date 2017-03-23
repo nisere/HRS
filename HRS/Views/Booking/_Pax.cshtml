@@ -1,0 +1,37 @@
+﻿@model HRS.Models.Pax
+<div id="paxRow@(Model.Index)">
+    <div>
+        @Html.DisplayFor(model => model.Title)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.FirstName)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.LastName)
+    </div>
+    <div>
+        @if (Model.Age == null || Model.Age > 18)
+        {
+            <text>>18</text>
+        }
+        else
+        {
+            @Html.DisplayFor(model => model.Age)
+        }
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.RoomLabel)
+    </div>
+    <div>
+        @Ajax.ActionLink("Edit", "EditPax", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paxRow')" })
+        @Ajax.ActionLink("Delete", "DeletePax", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "deleteDialog" },
+                new { @class = "deleteOpener" })
+    </div>
+    <div></div>
+</div>
+

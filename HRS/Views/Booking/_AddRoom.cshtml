@@ -1,0 +1,55 @@
+﻿@model HRS.Models.RoomItem
+
+@using (Ajax.BeginForm("AddRoom", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnBegin = "openDialog",
+        OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'roomRow')"
+    }, new { id = "roomRow" + Model.Index }))
+{
+    <div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.BookingID, new { id = "BookingID" + Model.Index })
+        @Html.HiddenFor(model => model.Index, new { id = "Index" + Model.Index })
+
+        @Html.TextBoxFor(model => model.Label, new { @class = "form-control small", id = "Label" + Model.Index })
+    </div>
+    <div>
+        @Html.EditorFor(model => model.From, new { id = "From" + Model.Index, onchange = "onChangeFields(" + Model.Index + ")" })
+    </div>
+    <div>
+        @Html.EditorFor(model => model.To, new { id = "To" + Model.Index, onchange = "onChangeFields(" + Model.Index + ")" })
+    </div>
+    <div>
+        @Html.DropDownListFor(model => model.RoomTypeID,
+                            new SelectList(ViewBag.RoomTypes, "ID", "Name", Model.RoomTypeID),
+                            "-- Choose --",
+                            new { @class = "form-control form-control-dropdown", id = "RoomType" + Model.Index,
+                                 onchange = "onChangeFields(" + Model.Index + ")" })
+    </div>
+    <div>
+        <span id="Availability@(Model.Index)">@ViewBag.Availability</span> available
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Price, new { @class = "form-control price", id = "Price" + Model.Index,
+            Value = (Model.Price != 0 ? Model.Price.ToString() : "0.00") })
+    </div>
+    <div>
+        @Html.DropDownListFor(model => model.Status,
+                            new SelectList(ViewBag.Statuses, "Key", "Value", Model.Status),
+                            new { @class = "form-control form-control-dropdown", id = "Status" + Model.Index })
+    </div>
+    <div>
+        <input type="submit" name="Save" value="Save" class="btn btn-default" />
+        <a href="javascript:void(0)" onclick="removeTableRow('roomRow@(Model.Index)')">Cancel</a>
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.Label)
+        @Html.ValidationMessageFor(model => model.From)
+        @Html.ValidationMessageFor(model => model.To)
+        @Html.ValidationMessageFor(model => model.RoomTypeID)
+        @Html.ValidationMessageFor(model => model.Price)
+        @Html.ValidationSummary(true)
+    </div>
+}
+

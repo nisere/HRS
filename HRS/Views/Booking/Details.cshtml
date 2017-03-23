@@ -1,0 +1,447 @@
+﻿@model HRS.Models.Booking
+@{
+    ViewBag.Title = "Booking #" + Model.ID;
+}
+
+<h3>@ViewBag.Title</h3>
+
+<section class="col-md-6 col-48">
+    <h4>Details</h4>
+    <div id="detailsDiv">
+        @{ Html.RenderPartial("_Details", Model); }
+    </div>
+</section>
+
+<section class="col-md-6 col-48-right">
+    <h4>Client</h4>
+    <div id="clientDiv">
+        @{ Model.Client.BookingID = Model.ID; }
+        @{ Html.RenderPartial("_Client", Model.Client); }
+    </div>
+</section>
+
+<hr />
+<section>
+    <h4>Rooms</h4>
+    @{ var i = 0; var display = "table"; }
+    @if (Model.RoomItems == null || Model.RoomItems.Count == 0)
+    {
+        display = "none";
+    }
+
+    <div class="table table-list" id="roomTable" style="display:@display">
+        <div class="thead">
+            <div>
+                <div class="th">Label</div>
+                <div class="th">Check-in</div>
+                <div class="th">Check-out</div>
+                <div class="th">Room Type</div>
+                <div class="th">Room</div>
+                <div class="th">Price</div>
+                <div class="th">Status</div>
+                <div class="th"></div>
+                <div class="th"></div>
+            </div>
+        </div>
+        <div class="tbody" id="roomBody">
+            @foreach (var item in Model.RoomItems)
+            {
+                item.Index = ++i;
+                item.RoomTypeName = item.RoomType.Name;
+                item.RoomName = (item.Room != null) ? item.Room.Name : "";
+                Html.RenderPartial("_Room", item);
+            }
+        </div>
+    </div>
+    <div style="padding-left:6px; margin-top:-10px;">
+        <span><b>Booking Price:</b> <span id="BookingPrice">@Model.Price</span></span>
+    </div>
+
+    <input type="hidden" id="roomIndex" value="@i" />
+    <h5>
+        @Ajax.ActionLink("Add", "AddRoom", new { id = Model.ID },
+            new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "roomBody",
+                OnSuccess = "updateValidator(this)" },
+            new { id = "addRoomLink", data_table_id = "roomTable", data_index_id = "roomIndex",
+                  data_url = Url.Action("AddRoom", new { id = Model.ID }),
+                  data_row_id = "roomRow",
+                onclick = "addTableRow(this)" } )
+    </h5>
+</section>
+<hr />
+
+<section>
+    <h4>Guests</h4>
+    @{ i = 0; display = "table"; }
+    @if (Model.Pax == null || Model.Pax.Count == 0)
+    {
+        display = "none";
+    }
+
+    <div class="table table-list" id="paxTable" style="display:@display">
+        <div class="thead">
+            <div>
+                <div class="th">Title</div>
+                <div class="th">First Name</div>
+                <div class="th">Last Name</div>
+                <div class="th">Age</div>
+                <div class="th">Phone</div>
+                <div class="th">Room Label</div>
+                <div class="th"></div>
+                <div class="th"></div>
+            </div>
+        </div>
+        <div class="tbody" id="paxBody">
+            @foreach (var pax in Model.Pax)
+            {
+                pax.Index = ++i;
+                pax.RoomLabel = (pax.RoomItem != null) ? pax.RoomItem.Label : "";
+                Html.RenderPartial("_Pax", pax);
+            }
+        </div>
+    </div>
+
+    <input type="hidden" id="paxIndex" value="@i" />
+    <h5>
+        @Ajax.ActionLink("Add", "AddPax", new { id = Model.ID },
+            new AjaxOptions
+            {
+                HttpMethod = "Get",
+                InsertionMode = InsertionMode.InsertAfter,
+                UpdateTargetId = "paxBody",
+                OnSuccess = "updateValidator(this)"
+            },
+            new { id = "addPaxLink", data_table_id = "paxTable", data_index_id = "paxIndex",
+                data_url = Url.Action("AddPax", new { id = Model.ID }), data_row_id = "paxRow",
+                onclick = "addTableRow(this)" } )
+    </h5>
+</section>
+
+<hr />
+<section class="col-md-6 col-48">
+    <h4>Payments</h4>
+    @{ i = 0; display = "table"; }
+    @if (Model.Payments == null || Model.Payments.Count == 0)
+    {
+        display = "none";
+    }
+    <div class="table table-list" id="paymentTable" style="display:@display">
+        <div class="thead">
+            <div>
+                <div class="th">Date</div>
+                <div class="th">Value</div>
+                <div class="th">Note</div>
+                <div class="th"></div>
+                <div class="th"></div>
+            </div>
+        </div>
+        <div class="tbody" id="paymentBody">
+            @{ var balance = Model.Price; }
+            @foreach (var item in Model.Payments)
+            {
+                item.Index = ++i;
+                Html.RenderPartial("_Payment", item);
+                balance -= item.Value;
+            }
+        </div>
+    </div>
+    <div style="padding-left:6px; margin-top:-10px;">
+        <span><b>Balance:</b> <span id="Balance">@balance</span></span>
+    </div>
+    <input type="hidden" id="paymentIndex" value="@i" />
+    <h5>
+        @Ajax.ActionLink("Add", "AddPayment", new { id = Model.ID },
+            new AjaxOptions
+            {
+                HttpMethod = "Get",
+                InsertionMode = InsertionMode.InsertAfter,
+                UpdateTargetId = "paymentBody",
+                OnSuccess = "updateValidator(this)"
+            },
+            new
+            {
+                id = "addPaymentLink",
+                data_table_id = "paymentTable",
+                data_index_id = "paymentIndex",
+                data_url = Url.Action("AddPayment", new { id = Model.ID }),
+                data_row_id = "paymentRow",
+                onclick = "addTableRow(this)"
+            })
+    </h5>
+</section>
+
+<section class="col-md-6 col-48-right">
+    <h4>Notes</h4>
+    @{ i = 0; display = "table"; }
+    @if (Model.Notes == null || Model.Notes.Count == 0)
+    {
+        display = "none";
+    }
+    <div class="table table-list" id="noteTable" style="display:@display">
+        <div class="tbody" id="noteBody">
+            @foreach (var item in Model.Notes)
+            {
+                item.Index = ++i;
+                Html.RenderPartial("_Note", item);
+            }
+        </div>
+    </div>
+
+    <input type="hidden" id="noteIndex" value="@i" />
+    <h5>
+        @Ajax.ActionLink("Add", "AddNote", new { id = Model.ID },
+            new AjaxOptions
+            {
+                HttpMethod = "Get",
+                InsertionMode = InsertionMode.InsertAfter,
+                UpdateTargetId = "noteBody",
+                OnSuccess = "updateValidator(this)"
+            },
+            new
+            {
+                id = "addNoteLink",
+                data_table_id = "noteTable",
+                data_index_id = "noteIndex",
+                data_url = Url.Action("AddNote", new { id = Model.ID }),
+                data_row_id = "noteRow",
+                onclick = "addTableRow(this)"
+            })
+    </h5>
+</section>
+
+<div id="dialog" style="text-align:center">
+    <h3 style="margin-top:40px">Saving</h3>
+</div>
+
+<div id="clientDialog" class="dialog"></div>
+<div id="deleteDialog" class="dialog"></div>
+
+@section Scripts {
+    <script>
+    $("#deleteDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        closeOnEscape: false,
+        title: "Delete",
+        close: function (event, ui) {
+            $('#deleteDialog').html('');
+        }
+    })
+
+    $(".deleteOpener").click(function () {
+        $("#deleteDialog").dialog("open");
+    })
+
+    $("#clientDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        closeOnEscape: false,
+        title: "New client",
+        minWidth: 500,
+        position: { my: "center", at: "top", of: window },
+        close: function (event, ui) {
+            $("#clientDialog").html('');
+        }
+    })
+
+    function updateClientFields() {
+        $("#ClientName").autocomplete({
+            source: '@Url.Action("GetClient")',
+            select: function (event, ui) {
+                $("#ClientID").val(ui.item.id)
+                var elem = $('.input-validation-error').filter('#ClientID');
+                if (elem.length > 0) {
+                    elem.valid();
+                }
+            }
+        })
+
+        $("#opener").click(function () {
+            $("#clientDialog").dialog("open");
+        })
+    }
+
+    function toggle(obj) {
+        if (obj.checked) {
+            $('#company').css('display', 'block');
+            $('#person').css('display', 'none');
+        } else {
+            $('#company').css('display', 'none');
+            $('#person').css('display', 'block');
+        }
+    }
+
+    function makeDate(str) {
+        var arr = str.split('/');
+        return new Date(arr[2], arr[1] - 1, arr[0]);
+    }
+
+    function updateBookingDates(index) {
+        if ($('#RoomFrom' + index).length == 0) {
+            return;
+        }
+        var rfrom = $('#RoomFrom' + index).html();
+        var rto = $('#RoomTo' + index).html();
+        var bfrom = $('#BookingFrom').html();
+        var bto = $('#BookingTo').html();
+
+        if (makeDate(rfrom) < makeDate(bfrom)) {
+            $('#BookingFrom').html(rfrom);
+        }
+        if (makeDate(bto) < makeDate(rto)) {
+            $('#BookingTo').html(rto);
+        }
+    }
+
+    function updatePrice(index) {
+        var bookingId = $('#BookingID').html();
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: { id: bookingId },
+            url: '@Url.Action("GetBookingPrice")',
+            success: function (response) {
+                $('#BookingPrice').html(response.Price.toFixed(2));
+            }
+        });
+    }
+
+    function updateBalance(index) {
+        var bookingId = $('#BookingID').html();
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: { id: bookingId },
+            url: '@Url.Action("GetBalance")',
+            success: function (response) {
+                $('#Balance').html(response.Price.toFixed(2));
+            }
+        });
+    }
+
+    function updateRoomsStatus() {
+        var status = $('#BookingStatus').html();
+        $('.roomstatus').html(status);
+        closeDialog();
+    }
+
+    function onChangeFields(index) {
+        var rt = $('#RoomType' + index);    // Room Type
+        var cin = $('#From' + index);       // Check-in
+        var cout = $('#To' + index);        // Check-out
+
+        if (cin.valid() && cout.valid()) {
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: { id: rt.val(), index: index, from: cin.val(), to: cout.val() },
+            url: '@Url.Action("GetAvailability")',
+                success: function (response) {
+                    var elem = $('#Availability' + response.Index);
+                    elem.html(response.Availability);
+                    elem = $('#Price' + response.Index);
+                    elem.val(response.Price);
+                }
+            });
+        }
+    }
+
+    function updateValidator(elem) {
+        var indexId = $('#' + elem.id).attr("data-index-id");
+        var index = $('#' + indexId).val();
+        var rowId = $('#' + elem.id).attr("data-row-id");
+
+        $('#' + rowId + index + ' .datepicker').datepicker({
+            dateFormat: "dd/mm/yy",
+            onClose: function () {
+                var elem = $('.input-validation-error').filter('#' + this.id);
+                if (elem.length > 0) {
+                    elem.valid();
+                }
+            }
+        });
+
+        $('#' + rowId + index).removeData('validator');
+        $('#' + rowId + index).removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse($('#' + rowId + index));
+    }
+
+    function addTableRow(elem) {
+        var indexId = $('#' + elem.id).attr("data-index-id");
+
+        var index = $('#' + indexId).val();
+        index = parseInt(index) + 1;
+
+        $('#' + indexId).val(index);
+
+        var url = $('#' + elem.id).attr("data-url");
+        $('#' + elem.id).attr("href", url + '?index=' + index);
+
+        var tableId = $('#' + elem.id).attr("data-table-id");
+        $('#' + tableId).css('display', 'table');
+    }
+
+    function updateTableRow(xhr, index, rowId) {
+        if (xhr.status == 200) {
+            $('#' + rowId + index).replaceWith(xhr.responseText);
+
+            $('#' + rowId + index + ' .datepicker').datepicker({
+                dateFormat: "dd/mm/yy",
+                onClose: function () {
+                    var elem = $('.input-validation-error').filter('#' + this.id);
+                    if (elem.length > 0) {
+                        elem.valid();
+                    }
+                }
+            });
+
+            $('#' + rowId + index + ' .deleteOpener').click(function () {
+                $("#deleteDialog").dialog("open");
+            })
+
+            $('#' + rowId + index).removeData('validator');
+            $('#' + rowId + index).removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse($('#' + rowId + index));
+
+            if (rowId == 'roomRow') {
+                updateBookingDates(index);
+                if ($('#RoomPrice' + index).length != 0) {
+                    updatePrice(index);
+                    updateBalance(index);
+                }
+            }
+            if (rowId == 'paymentRow' && $('#PaymentValue' + index).length != 0) {
+                updateBalance(index);
+            }
+        }
+        closeDialog();
+    }
+
+    function removeTableRow(rowId) {
+        var body = $('#' + rowId).parent();
+        var table = body.parent();
+        $('#' + rowId).remove();
+        if (body.children().length == 0) {
+            table.css('display', 'none');
+        }
+    }
+
+    $("#dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        closeOnEscape: false
+    })
+    $("#dialog").siblings().filter(".ui-dialog-titlebar").css("display", "none");
+
+    function openDialog() {
+        $("#dialog").dialog("open");
+    }
+
+    function closeDialog() {
+        $("#dialog").dialog("close");
+    }
+</script>
+}

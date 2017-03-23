@@ -1,0 +1,17 @@
+﻿@model HRS.Models.Note
+<div id="noteRow@(Model.Index)">
+    <div>
+        @Html.DisplayFor(model => model.Text)
+    </div>
+    <div>
+        @Ajax.ActionLink("Edit", "EditNote", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'noteRow')" })
+        @Ajax.ActionLink("Delete", "DeleteNote", new { id = Model.ID, index = Model.Index },
+                new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "deleteDialog" },
+                new { @class = "deleteOpener" })
+    </div>
+    <div></div>
+</div>
+
+
+

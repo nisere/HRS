@@ -1,0 +1,106 @@
+﻿@model HRS.ViewModels.RoomBlackoutsModel
+@{
+    ViewBag.Title = "Blackouts";
+}
+
+<h3>@ViewBag.Title for room @Html.DisplayFor(model => model.Room.Name)</h3>
+
+<section>
+    @{ var text = (ViewBag.Action == "Create") ? "New" : "Edit"; }
+    <h4>@text blackout</h4>
+
+    @using (Html.BeginForm("SaveBlackout", "Rooms", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal" style="width:80%">
+            @Html.ValidationSummary(true)
+            <input type="hidden" name="action" value="@ViewBag.Action" />
+            @if (ViewBag.Action == "Edit")
+            {
+                @Html.HiddenFor(model => model.Blackout.ID)
+            }
+            @Html.HiddenFor(model => model.Blackout.RoomID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Blackout.From, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Blackout.From)
+                    @Html.ValidationMessageFor(model => model.Blackout.From)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Blackout.To, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Blackout.To)
+                    @Html.ValidationMessageFor(model => model.Blackout.To)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @{ text = (ViewBag.Action == "Create") ? "Create" : "Save"; }
+                    <input type="submit" value="@text" class="btn btn-default" />
+                    @if (ViewBag.Action == "Edit")
+                    {
+                        <input type="button" value="Cancel" class="btn btn-default"
+                               onclick="window.location.href='@(Url.Action("Blackouts", new { id = Model.Room.ID }))'" />
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <hr />
+
+    <h4>Blackouts</h4>
+
+    @if (Model.Room.Blackouts == null || Model.Room.Blackouts.Count() == 0)
+    {
+        <p>There are no blackouts defined.</p>
+    }
+    else
+    {
+        <table class="table-list">
+            <tbody>
+                @foreach (var b in Model.Room.Blackouts)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(item => b.From) - @Html.DisplayFor(item => b.To)</td>
+                        <td>@Html.ActionLink("Edit", "SaveBlackout", new { id = b.ID })</td>
+                        <td>@Html.ActionLink("Delete", "DeleteBlackout", new { id = b.ID })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <h5>@Html.ActionLink("Back to rooms", "Index")</h5>
+</section>
+@if (Model.DelBlackout != null)
+{
+    <div id="deleteDiv" class="dialog">
+        <p>Confirm deletion of blackout:</p>
+        <h4>@Html.DisplayFor(model => model.DelBlackout.From) - @Html.DisplayFor(model => model.DelBlackout.To)</h4>
+
+        @using (Html.BeginForm("DeleteBlackout", "Rooms", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.DelBlackout.ID)
+
+            <div style="text-align:right">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+
+        }
+    </div>
+    @section Scripts {
+        <script>
+            $("#deleteDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                title: "Delete"
+            })
+        </script>
+    }
+}

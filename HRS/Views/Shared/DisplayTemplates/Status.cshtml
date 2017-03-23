@@ -1,0 +1,6 @@
+﻿@model string
+
+@if (HRS.Models.Status.List.ContainsKey(Model))
+{
+    @HRS.Models.Status.List[Model]
+}

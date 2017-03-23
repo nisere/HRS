@@ -1,0 +1,36 @@
+﻿@model HRS.Models.Payment
+
+@using (Ajax.BeginForm("EditPayment", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnBegin = "openDialog",
+        OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paymentRow')"
+    }, new { id = "paymentRow" + Model.Index }))
+{
+    <div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.ID, new { id = "ID" + Model.Index })
+        @Html.HiddenFor(model => model.BookingID, new { id = "BookingID" + Model.Index })
+        @Html.HiddenFor(model => model.Index, new { id = "Index" + Model.Index })
+
+        @Html.EditorFor(model => model.Date, new { id = "Date" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Value, new { @class = "form-control price", id = "Value" + Model.Index })
+    </div>
+    <div>
+        @Html.TextBoxFor(model => model.Text, new { @class = "form-control", id = "Text" + Model.Index })
+    </div>
+    <div>
+        <input type="submit" name="Save" value="Save" class="btn btn-default" />
+        @Ajax.ActionLink("Cancel", "Payment", new { id = Model.ID, index = Model.Index },
+                 new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'paymentRow')" })
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.Date)
+        @Html.ValidationMessageFor(model => model.Value)
+        @Html.ValidationSummary(true)
+    </div>
+}
+
+

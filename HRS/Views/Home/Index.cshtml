@@ -1,0 +1,118 @@
+﻿@model HRS.ViewModels.FrontdeskModel
+@{
+    ViewBag.Title = "Frontdesk";
+}
+<h3>@ViewBag.Title</h3>
+<div style="margin-top:18px; margin-bottom:18px">
+    <h5 style="display:inline">
+        @Html.ActionLink("New booking", "Create", "Booking")
+    </h5>
+    <ul class="list-inline" style="float:right">
+        <li><div class="Booked" style="float:left;width:10px;height:10px; margin:5px"></div>Booked</li>
+        <li><div class="CheckedIn" style="float: left; width: 10px; height: 10px; margin: 5px"></div>Checked-in</li>
+        <li><div class="CheckedOut" style="float: left; width: 10px; height: 10px; margin: 5px"></div>Checked-out</li>
+        <li><div class="blackout" style="float: left; width: 10px; height: 10px; margin: 5px"></div>Blackout</li>
+    </ul>
+</div>
+<table class="frontdesk">
+    <thead>
+        <tr>
+            <th>Today is <b>@DateTime.Now.ToShortDateString()</b></th>
+            @for (var date = Model.From; date <= Model.To; date = date.AddDays(1))
+            {
+                var css = (date == DateTime.Now.Date) ? "class=today" : "";
+                <td @css>
+                    @date.Day
+                </td>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RoomTypes)
+        {
+            var roomType = item.RoomType;
+            <tr class="roomtype">
+                <th>@roomType.Name</th>
+                <td colspan="@((Model.To.Date - Model.From.Date).Days + 1)"></td>
+            </tr>
+            foreach (var room in item.Rooms)
+            {
+                <tr>
+                    <th>@room.Name</th>
+                    @for (var date = Model.From; date <= Model.To; date = date.AddDays(1))
+                    {
+                        var css = (date == DateTime.Now.Date) ? "class=today" : "";
+                        if (Model.RoomItems.ContainsKey(room.ID))
+                        {
+                            var roomItem = Model.RoomItems[room.ID].FirstOrDefault();
+                            if (roomItem != null && roomItem.From <= date)
+                            {
+                                if (roomItem.From < date) 
+                                {
+                                    roomItem.From = date;
+                                }
+                                var days = (roomItem.To.Value - roomItem.From.Value).Days;
+                                <td colspan="@days" class="@roomItem.Status">
+                                    @Html.ActionLink("#" + roomItem.BookingID, "Details", "Booking", new { id = roomItem.BookingID }, null )
+                                </td>
+                                Model.RoomItems[room.ID].Remove(roomItem);
+                                date = date.AddDays(days - 1);
+                            }
+                            else if (Model.Blackouts.ContainsKey(room.ID))
+                            {
+                                var blackout = Model.Blackouts[room.ID].FirstOrDefault();
+                                if (blackout != null && blackout.From <= date)
+                                {
+                                    if (blackout.From < date)
+                                    {
+                                        blackout.From = date;
+                                    }
+                                    var days = (blackout.To.Value.AddDays(1) - blackout.From.Value).Days;
+                                    <td colspan="@days" class="blackout">
+
+                                    </td>
+                                    Model.Blackouts[room.ID].Remove(blackout);
+                                    date = date.AddDays(days - 1);
+                                }
+                                else
+                                {
+                                    <td @css></td>
+                                }
+                            }
+                            else
+                            {
+                                <td @css></td>
+                            }
+
+                        }
+                        else if (Model.Blackouts.ContainsKey(room.ID))
+                            {
+                                var blackout = Model.Blackouts[room.ID].FirstOrDefault();
+                                if (blackout != null && blackout.From <= date)
+                                {
+                                    if (blackout.From < date)
+                                    {
+                                        blackout.From = date;
+                                    }
+                                    var days = (blackout.To.Value.AddDays(1) - blackout.From.Value).Days;
+                                    <td colspan="@days" class="blackout">
+
+                                    </td>
+                                    Model.Blackouts[room.ID].Remove(blackout);
+                                    date = date.AddDays(days - 1);
+                                }
+                                else
+                                {
+                                    <td @css></td>
+                                }
+                            }
+                        else
+                        {
+                            <td @css></td>
+                        }
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

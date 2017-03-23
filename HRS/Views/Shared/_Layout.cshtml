@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqueryui")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container body-div">
+        <div class="container navbar navbar-inverse navbar-static-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">HRS</span>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Frontdesk", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Bookings", "Index", "Booking")</li>
+                    <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Scripts/globalize/globalize.js"></script>
+    <script src="~/Scripts/globalize/cultures/globalize.culture.@(System.Threading.Thread.CurrentThread.CurrentCulture.Name).js"></script>
+    <script>
+        // Validate hidden fields
+        $.validator.setDefaults({ ignore: null });
+
+        // Datepicker
+        $(document).ready(
+            $('.datepicker').datepicker({
+                dateFormat: "dd/mm/yy",
+                onClose: function () {
+                    var elem = $('.input-validation-error').filter('#' + this.id);
+                    if (elem.length > 0) {
+                        elem.valid();
+                    }
+                }
+            })
+        );
+
+        // Globalize validation
+        // source: http://www.asp.net/mvc/tutorials/mvc-5/introduction/examining-the-edit-methods-and-edit-view
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) ||
+                !isNaN(Globalize.parseFloat(value));
+        }
+        $(document).ready(function () {
+            Globalize.culture('@(System.Threading.Thread.CurrentThread.CurrentCulture.Name)');
+        });
+
+        jQuery.extend(jQuery.validator.methods, {
+            range: function (value, element, param) {
+                //Use the Globalization plugin to parse the value
+                var val = Globalize.parseFloat(value);
+                return this.optional(element) || (
+                    val >= param[0] && val <= param[1]);
+            }
+        });
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) ||
+                Globalize.parseDate(value) ||
+                Globalize.parseDate(value, "yyyy-MM-dd");
+
+        };
+
+        // Client Validation for DateInterval and DateIntervalStrict attributes
+        $.validator.addMethod("dateinterval", function (value, element, param) {
+            var arr = value.split('/');
+            valueDate = new Date(arr[2], arr[1] - 1, arr[0]);
+            arr = $(param).val().split('/');
+            paramDate = new Date(arr[2], arr[1] - 1, arr[0]);
+            return valueDate >= paramDate;
+        });
+        $.validator.unobtrusive.adapters.add("dateinterval", ["from"], function (options) {
+            var index = options.element.name.lastIndexOf(".");
+            var prefix = '';
+            if (index > 0) {
+                prefix += options.element.name.slice(0, index) + '.';
+            }
+            var name = prefix + options.params.from;
+            var elem = $('#' + options.element.id).parents('form').find('[name="' + name + '"]');
+
+            options.rules["dateinterval"] = '#' + elem.attr("id");
+            options.messages["dateinterval"] = options.message;
+        });
+
+        $.validator.addMethod("dateintervalstrict", function (value, element, param) {
+            var arr = value.split('/');
+            valueDate = new Date(arr[2], arr[1] - 1, arr[0]);
+            arr = $(param).val().split('/');
+            paramDate = new Date(arr[2], arr[1] - 1, arr[0]);
+            return valueDate > paramDate;
+        });
+        $.validator.unobtrusive.adapters.add("dateintervalstrict", ["from"], function (options) {
+            var index = options.element.name.lastIndexOf(".");
+            var prefix = '';
+            if (index > 0) {
+                prefix += options.element.name.slice(0, index) + '.';
+            }
+            var name = prefix + options.params.from;
+            var elem = $('#' + options.element.id).parents('form').find('[name="' + name + '"]');
+
+            options.rules["dateintervalstrict"] = '#' + elem.attr("id");
+            options.messages["dateintervalstrict"] = options.message;
+        });
+
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@model HRS.Models.Booking
+
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    HttpMethod = "Post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "detailsDiv",
+    OnBegin = "openDialog",
+    OnSuccess = "updateRoomsStatus",
+    OnFailure = "closeDialog"
+})) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ID, new { @class = "control-label col-md-4" })
+            <div class="col-md-8 form-text">
+                @Html.DisplayFor(model => model.ID)
+                @Html.HiddenFor(model => model.ID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreateTime, new { @class = "control-label col-md-4" })
+            <div class="col-md-8 form-text">
+                @Html.DisplayFor(model => model.CreateTime)
+                <input type="hidden" name="CreateTime" 
+                       value="@(Model.CreateTime.ToShortDateString() + " " + Model.CreateTime.ToLongTimeString())" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class = "control-label col-md-4">Date Interval</label>
+            <div class="col-md-8 form-text">
+                @Html.DisplayFor(model => model.From) - @Html.DisplayFor(model => model.To)
+                <input type="hidden" name="From" value="@Model.From.Value.ToShortDateString()" />
+                <input type="hidden" name="To" value="@Model.To.Value.ToShortDateString()" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                <div class="dropdown">
+                    @Html.DropDownListFor(model => model.Status, new SelectList(ViewBag.Statuses, "Key", "Value"),
+                        new { @class = "form-control form-control-dropdown" })
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<h5>
+    @Ajax.ActionLink("Cancel", "Details", new { id = Model.ID },
+        new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "detailsDiv" })
+</h5>
+
+

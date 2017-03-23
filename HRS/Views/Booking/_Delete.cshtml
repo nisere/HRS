@@ -1,0 +1,18 @@
+﻿@model HRS.ViewModels.DeleteModel
+
+@using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "deleteDialog" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.Index)
+    <input type="hidden" name="Subject" value="@Model.Subject">
+    <input type="hidden" name="Text" value="@Model.Text">
+
+    <p>Confirm deletion of @Model.Subject:</p>
+
+    <h4>@Model.Text</h4>
+
+    <div style="text-align:right">
+        <input type="submit" value="Delete" class="btn btn-default" />
+    </div>
+}

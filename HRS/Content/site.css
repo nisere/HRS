@@ -1,0 +1,387 @@
+﻿/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.form-horizontal .form-text {
+    padding-top: 7px;
+}
+
+.form-horizontal .dropdown {
+    padding-top: 4px;
+}
+
+.dialog .form-horizontal .checkbox {
+    padding-top: 9px;
+}
+
+.dialog .col-md-2 {
+    width: 26.6667%;
+}
+
+.dialog .col-md-offset-2 {
+    margin-left: 26.6667%;
+}
+
+.dialog .col-md-10 {
+    width: 73.3333%;
+}
+
+.navbar-static-top {
+    z-index: 0;
+}
+
+input {
+    max-width: 240px;
+}
+
+.medium {
+    max-width: 120px;
+}
+
+.tiny {
+    max-width: 38px;
+}
+
+.datepicker {
+    max-width: 86px;
+}
+
+.price, .small {
+    max-width: 66px;
+}
+
+.form-control {
+    display: inline;
+    height: 32px;
+    color: #444444;
+    padding: 3px 6px;
+}
+
+.form-control-dropdown {
+    height: 28px;
+    padding: 3px 2px 3px 3px;
+    width:auto;
+}
+
+.dialog {
+    color: #444444;
+    font-size: 14px;
+}
+
+.dialog .form-horizontal {
+    width: 99%;
+}
+
+.navbar {
+    background: url("images/ui-bg_gloss-wave_55_5c9ccc_500x100.png") repeat-x scroll 50% 50% #5C9CCC;
+    border: 1px solid #4297D7;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 4px -10px;
+    width: auto;
+    border-bottom-width: 5px;
+    border-bottom-color: #ff6a00;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height:100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: linear-gradient(to bottom, #e6e6e6,#ffffff,#e6e6e6);
+    color: #444444;
+}
+
+.body-div {
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: #A6C9E2;
+    min-height: 100%;
+    padding-bottom: 5px;
+    background-color: #FFFFFF;
+    margin-bottom: 5px;
+}
+
+.navbar-inverse .navbar-nav > li > a  {
+    color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    text-shadow: 1px 1px 8px #ffffff, 1px -1px 8px #ffffff;
+}
+
+a {
+    color: #327cbb;
+}
+
+a:hover {
+    color: #ff6a00;
+    text-decoration: none;
+}
+
+.navbar-inverse .navbar-brand {
+    font-size: 30px;
+    color: #ffffff;
+    background-color: #ff6a00;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-shadow: 1px 1px 20px #ffffAA, 1px -1px 20px #ffffAA;
+}
+
+.navbar-inverse .navbar-brand:hover {
+    background-color: #ff6a00;
+}
+
+section {
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: #A6C9E2;
+    padding: 5px 20px;
+    background: linear-gradient(to bottom, #e6e6e6,#ffffff,#ffffff,#e6e6e6);
+}
+
+#loginForm .form-control {
+    display: block;
+}
+
+.loginSection {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+
+.btn-default {
+    background: #4297D7;
+    border-color: #4297D7;
+    color: white;
+}
+
+.btn-default:hover {
+    background: #ff6a00;
+    border-color: #ff6a00;
+    color: white;
+}
+
+hr {
+    margin-top:0;
+    margin-bottom:20px;
+    border-color: transparent;
+    clear:both;
+}
+
+.form-group {
+    margin-bottom:6px;
+}
+
+.table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    border-color: gray;
+    width:auto;
+}
+
+.table>.tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.table>.thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit; 
+}
+
+.table>.tfoot {
+    display: table-footer-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.table>.thead>*, .table>.tbody>*, .table>.tfoot>* {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit; 
+}
+
+.table>.thead>*>*, .table>.tbody>*>*, .table>.tfoot>*>* {
+    display: table-cell;
+    vertical-align: inherit; 
+}
+
+.table>.thead>*>.th, .table>.tbody>*>.th, .table>.tfoot>*>.th {
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-list>.tbody>* {
+    background-color: #ffffAA;
+}
+
+.table-list tbody tr {
+    background-color: #ffffAA;
+}
+
+.table-list {
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    margin-bottom: 10px;
+}
+
+.table-list  td {
+    padding: 2px 8px;
+}
+
+.table-list  th {
+    padding: 0px 8px;
+}
+
+.table-list>.thead>*>*, .table-list>.tbody>*>*, .table-list>.tfoot>*>* {
+    padding: 2px 8px;
+}
+
+.table-list>.thead>*>.th, .table-list>.tbody>*>.th, .table-list>.tfoot>*>.th {
+    padding: 0px 8px;
+}
+
+.table {
+    margin-bottom:10px;
+}
+
+ul, ol {
+    padding-left: 17px;
+}
+
+h4 {
+    color: #ff6a00;
+}
+
+h5 {
+    margin-bottom:6px;
+    margin-top:6px;
+}
+
+dt, dl {
+    margin-bottom:2px;
+}
+
+.col-48 {
+    width: 49%;
+}
+
+.col-48-right {
+    width: 49%;
+    margin-left: 2%;
+}
+
+.dl-horizontal {
+    margin: 0;
+}
+
+.Booked {
+    background-color: orange;
+    text-align: center;
+}
+
+.CheckedIn {
+    background-color: red;
+    text-align: center;
+}
+
+.CheckedOut {
+    background-color: green;
+    text-align: center;
+}
+
+.blackout {
+    background-color: gray;
+}
+
+.frontdesk {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.frontdesk td, .frontdesk th {
+    border: solid 1px #bbbbbb;
+}
+
+.frontdesk thead td {
+    width: 27px;
+    text-align: center;
+}
+
+.frontdesk thead th {
+    font-weight: normal;
+    background-color: #ffffAA;
+}
+
+.frontdesk tbody td a {
+    color: white;
+}
+
+.frontdesk tbody td a:hover {
+    text-shadow: 1px 1px 8px #ffffff, 1px -1px 8px #ffffff;
+}
+
+.frontdesk tbody th {
+    padding-left: 8px;
+    background-color: #A6C9E2;
+    border-color: #dddddd;
+}
+
+.frontdesk tbody tr.roomtype th {
+    padding-left: 4px;
+    color: white;
+    background-color: #ff6a00;
+}
+
+.frontdesk tbody tr.roomtype td {
+    background-color: #dddddd;
+}
+
+.frontdesk .today {
+    background-color: #ffffAA;
+}

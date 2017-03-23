@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2014-06-09T14:32:49" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '7e907ab6-4d9e-4b0c-9e10-c1c58a3f14e9' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'fda76e12-8a05-4a22-b44a-0f267429afc9' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ffd2ae26-080b-402b-8069-243298d268f2' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS' -  (Package)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models' -  (Package)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking' -  (Class)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Booking' -  (Operation)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Client' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::ClientID' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::ClientName' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::CreateTime' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::From' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::ID' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Notes' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Pax' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Payments' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Price' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::RoomItemList' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::RoomItems' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::Status' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Booking::To' -  (Property)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Client' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Note' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Pax' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::Payment' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::HRS::Models::RoomItem' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System' -  (Package)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections' -  (Package)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic' -  (Package)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::ICollection' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::ICollection&lt;Note‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::ICollection&lt;Pax‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::ICollection&lt;Payment‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::ICollection&lt;RoomItem‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::List' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Collections::Generic::List&lt;RoomItem‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::DateTime' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Decimal' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Nullable' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Nullable&lt;DateTime‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject::System::Nullable&lt;Int32‎&gt;' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::DateTime (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Nullable&lt;DateTime‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Nullable&lt;DateTime‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Nullable&lt;Int32‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Decimal (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::HRS::Models::Client (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Collections::Generic::ICollection&lt;RoomItem‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Collections::Generic::ICollection&lt;Note‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Collections::Generic::ICollection&lt;Payment‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Collections::Generic::ICollection&lt;Pax‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::HRS::Models::Booking to ModelingProject::System::Collections::Generic::List&lt;RoomItem‎&gt; (Association)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject::System::Collections::Generic::List&lt;RoomItem‎&gt; to ModelingProject::System::Collections::Generic::ICollection&lt;RoomItem‎&gt; (InterfaceRealization)" />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="High" Text="(1) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="High" Text="(17) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-06-09T14:32:55" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+</Log>

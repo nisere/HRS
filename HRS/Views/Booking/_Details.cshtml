@@ -1,0 +1,38 @@
+﻿@model HRS.Models.Booking
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.ID)
+    </dt>
+
+    <dd id="BookingID">
+        @Html.DisplayFor(model => model.ID)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreateTime)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.CreateTime)
+    </dd>
+
+    <dt>
+        Date Interval
+    </dt>
+
+    <dd>
+        <span id="BookingFrom">@Html.DisplayFor(model => model.From)</span> - <span id="BookingTo">@Html.DisplayFor(model => model.To)</span>
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Status)
+    </dt>
+
+    <dd id="BookingStatus">
+        @Html.DisplayFor(model => model.Status)
+    </dd>
+</dl>
+<h5>
+    @Ajax.ActionLink("Edit", "Edit", new { id = Model.ID },
+        new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "detailsDiv" })
+</h5>

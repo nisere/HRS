@@ -1,0 +1,14 @@
+﻿<script>
+    $('#deleteDialog').dialog("close");
+    if ('@(ViewBag.Subject)' == 'payment') {
+        updateBalance(@(ViewBag.Index))
+    }
+    var row = $('#@(ViewBag.Subject)Row@(ViewBag.Index)');
+    var body = row.parent();
+    var table = body.parent();
+    row.remove();
+    if (body.children().length == 0) {
+        table.css('display', 'none');
+    }
+    $('#deleteDialog').html('');
+</script>

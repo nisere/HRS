@@ -1,0 +1,36 @@
+﻿@model HRS.ViewModels.ChangeClientModel
+
+<h5>
+    @Ajax.ActionLink("New client", "CreateClient", "Booking",
+                new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "clientDialog" },
+                new { id = "opener" })
+</h5>
+
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    HttpMethod = "Post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "clientDiv",
+    OnBegin = "openDialog",
+    OnComplete = "closeDialog",
+}))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+    <div class="form-group">
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.ClientID, new { id = "ClientID" })
+        @Html.TextBoxFor(model => model.ClientName, new { id = "ClientName", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ClientID)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+}    
+<h5>
+    @Ajax.ActionLink("Cancel", "Client", new { id = Model.ID },
+        new AjaxOptions { HttpMethod = "Get", InsertionMode = InsertionMode.Replace, UpdateTargetId = "clientDiv" })
+</h5>
+

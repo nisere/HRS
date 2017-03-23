@@ -1,0 +1,156 @@
+﻿@model HRS.ViewModels.PricingViewModel
+@{
+    ViewBag.Title = "Pricings";
+}
+
+<h3>@ViewBag.Title</h3>
+<section>
+    @{ var text = (ViewBag.Action == "Create") ? "New" : "Edit"; }
+    <h4>@text pricing</h4>
+
+    @{ text = (ViewBag.Action == "Create") ? "Create" : "Edit"; }
+    @using (Html.BeginForm(text, "Pricing", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+            <input type="hidden" name="action" value="@ViewBag.Action" />
+            @if (ViewBag.Action == "Edit")
+            {
+                @Html.HiddenFor(model => model.RuleSet.ID)
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RuleSet.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.RuleSet.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RuleSet.Name)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Availability</label>
+                <div class="col-md-10">
+                    from
+                    @Html.EditorFor(model => model.RuleSet.From)
+                    to
+                    @Html.EditorFor(model => model.RuleSet.To)
+                    @Html.ValidationMessageFor(model => model.RuleSet.From)
+                    @Html.ValidationMessageFor(model => model.RuleSet.To)
+                </div>
+            </div>
+            @if (Model.Rules.Count == 0)
+            {
+                <div class="form-group">
+                    <label class="control-label col-md-2">Price per Room Type</label>
+                    <div class="col-md-10 form-text">
+                        no room types defined
+                    </div>
+                </div>
+            }
+            else
+            {
+                for (var i = 0; i < Model.Rules.Count; i++)
+                {
+                    <div class="form-group">
+                        @if (ViewBag.Action == "Edit")
+                        {
+                            @Html.HiddenFor(model => model.Rules[i].ID)
+                            @Html.HiddenFor(model => model.Rules[i].PricingRuleSetID)
+                        }
+                        @Html.HiddenFor(model => model.Rules[i].RoomTypeID)
+                        @Html.HiddenFor(model => model.Rules[i].RoomTypeName)
+                        @if (i == 0)
+                        {
+                            <label class="control-label col-md-2">Price per Room Type</label>
+                        }
+                        else
+                        {
+                            <div class="col-md-2"></div>
+                        }
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Rules[i].Price, new { @class = "form-control price",
+                                Value = (Model.Rules[i].Price != 0 ? Model.Rules[i].Price.ToString() : "0.00") }) /
+                            @Html.DisplayFor(model => model.Rules[i].RoomTypeName)
+                            @Html.ValidationMessageFor(model => model.Rules[i].Price)
+                        </div>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @{ text = (ViewBag.Action == "Create") ? "Create" : "Save"; }
+                    <input type="submit" value="@text" class="btn btn-default" />
+                    @if (ViewBag.Action == "Edit")
+                    {
+                        <input type="button" value="Cancel" class="btn btn-default"
+                               onclick="window.location.href='@(Url.Action("Index"))'" />
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <hr />
+
+    <h4>Pricings</h4>
+
+    @if (Model.RuleSets == null || Model.RuleSets.Count() == 0)
+    {
+        <p>There are no pricings defined.</p>
+    }
+    else
+    {
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Pricing</th>
+                    <th>Availability</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rs in Model.RuleSets)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(item => rs.Name)</td>
+                        <td>@Html.DisplayFor(item => rs.From) - @Html.DisplayFor(item => rs.To)</td>
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = rs.ID })</td>
+                        <td>@Html.ActionLink("Delete", "Delete", new { id = rs.ID })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
+@if (Model.DelRuleSet != null)
+{
+    <div id="deleteDiv" class="dialog">
+        <p>Confirm deletion of the pricing: </p>
+        <h4>
+            @Html.DisplayFor(model => model.DelRuleSet.Name)
+        </h4>
+
+        @using (Html.BeginForm("Delete", "Pricing", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.DelRuleSet.ID)
+
+            <div class="form-actions no-color" style="text-align:right">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+
+        }
+    </div>
+    @section Scripts {
+        <script>
+            $("#deleteDiv").dialog({
+                autoOpen: true,
+                modal: true,
+                closeOnEscape: false,
+                title: "Pricing"
+            })
+        </script>
+    }
+}

@@ -1,0 +1,27 @@
+﻿@model HRS.Models.Note
+
+@using (Ajax.BeginForm("AddNote", null, new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnBegin = "openDialog",
+    OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'noteRow')"
+}, new { id = "noteRow" + Model.Index }))
+{
+    <div>
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.BookingID, new { id = "BookingID" + Model.Index })
+        @Html.HiddenFor(model => model.Index, new { id = "Index" + Model.Index })
+
+        @Html.TextAreaFor(model => model.Text, new { @class = "form-control", id = "Text" + Model.Index, cols = "200" })
+    </div>
+    <div>
+        <input type="submit" name="Save" value="Save" class="btn btn-default" />
+        <a href="javascript:void(0)" onclick="removeTableRow('noteRow@(Model.Index)')">Cancel</a>
+    </div>
+    <div>
+        @Html.ValidationMessageFor(model => model.Text)
+        @Html.ValidationSummary(true)
+    </div>
+}
+
+

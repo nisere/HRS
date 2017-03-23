@@ -1,0 +1,30 @@
+﻿@model HRS.Models.RoomItem
+<div id="roomRow@(Model.Index)">
+    <div>
+        @Html.DisplayFor(model => model.Label)
+    </div>
+    <div id="RoomFrom@(Model.Index)">
+        @Html.DisplayFor(model => model.From)
+    </div>
+    <div id="RoomTo@(Model.Index)">
+        @Html.DisplayFor(model => model.To)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.RoomTypeName)
+    </div>
+    <div>
+        @Html.DisplayFor(model => model.RoomName)
+    </div>
+    <div id="RoomPrice@(Model.Index)">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+    <div class="roomstatus">
+        @Html.DisplayFor(model => model.Status)
+    </div>
+    <div>
+        @Ajax.ActionLink("Edit", "EditRoom", new { id = Model.ID, index = Model.Index },
+        new AjaxOptions { HttpMethod = "Get", OnComplete = "updateTableRow(xhr, '" + Model.Index + "', 'roomRow')" })
+    </div>
+    <div></div>
+</div>
+

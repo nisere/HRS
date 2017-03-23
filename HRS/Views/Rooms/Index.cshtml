@@ -1,0 +1,82 @@
+﻿@model HRS.ViewModels.RoomsModel
+@{
+    ViewBag.Title = "Rooms";
+}
+
+<h3>@ViewBag.Title</h3>
+<section>
+    @using (Html.BeginForm("Create", "Rooms", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <h4>New room</h4>
+
+        <div class="form-horizontal" style="width:90%">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Room.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Room.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Room.Name)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Room.RoomTypeID, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="dropdown">
+                        @Html.DropDownListFor(model => model.Room.RoomTypeID, new SelectList(Model.RoomTypes, "ID", "Name"), "-- Choose --", new { @class = "form-control form-control-dropdown" })
+                        @Html.ValidationMessageFor(model => model.Room.RoomTypeID)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Room.IsActive, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Room.IsActive)
+                        @Html.ValidationMessageFor(model => model.Room.IsActive)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <hr />
+
+    <h4>Rooms</h4>
+
+    @if (Model.Rooms == null || Model.Rooms.Count() == 0)
+    {
+        <p>There are no rooms defined.</p>
+    }
+    else
+    {
+        <table class="table-list">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Room Type</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.Rooms)
+                {
+                    var value = (r.IsActive) ? "Active" : "Inactive";
+                    <tr>
+                        <td>@Html.DisplayFor(item => r.Name)</td>
+                        <td>@Html.DisplayFor(item => r.RoomType.Name)</td>
+                        <td>@Html.ActionLink(value, "Edit", new { id = r.ID })</td>
+                        <td>@Html.ActionLink("View blackouts", "Blackouts", new { id = r.ID })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
